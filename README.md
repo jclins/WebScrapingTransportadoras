@@ -2,6 +2,9 @@
 
 ## App para WebScraping de Transportadoras por Estado
 
+App to **capture name and email** of carriers by states of Brazil from freight quote websites
+
+####################################################
 * 1- Criar ambiente virtual (Windows)
     * 1.0- cmd
     * 1.1- python -m venv ./venv
@@ -16,11 +19,11 @@
 
 * 3- pip freeze > requirements.txt
 
-#########################################
+####################################################
 ## copy geckodriver.exe and chromedriver.exe to %HOMEPATH%\AppData\Roaming\Python\Python310\Scripts
 C:\Users\USER\AppData\Local\Programs\Python\Python310
 
 https://github.com/mozilla/geckodriver/releases
 https://chromedriver.storage.googleapis.com/index.html
 
-#########################################
+####################################################
