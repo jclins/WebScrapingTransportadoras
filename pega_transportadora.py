@@ -10,25 +10,25 @@ from selenium.webdriver.firefox.options import Options
 
 def buildtransp(type):
     cidade =paginas[type]['cidade'].upper()
-    estado = paginas[type]['estado'].upper()
+    estado = paginas[type]['UF'].upper()
     url = str(f'{urlbase}{cidade.lower()}-{estado.lower()}')
     driver.get(url)
     time.sleep(3)
     last_height = driver.execute_script("return document.body.scrollHeight")
     countScroll = 0
-    print(f'{cidade}-{estado}')
+    print(f'\r{cidade}-{estado}', end="")
+    print('                                ')
     while True:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight-1000);")
         time.sleep(1)
         countScroll += 1
-        print (f'{countScroll}- Scroll Down')
+        print (f'\r{countScroll}- Scroll Down',end="")
         new_height = driver.execute_script("return document.body.scrollHeight")
         if new_height == last_height:
             driver.find_element(By.TAG_NAME,'body').send_keys(Keys.CONTROL + Keys.HOME)
             countScroll = 0
-            clear()
-            print(f'{cidade}-{estado}')
-            print('Validando Página')
+            # print(f'{cidade}-{estado}')
+            print('\rValidando Página',end="")
             break
         last_height = new_height
 
@@ -45,12 +45,12 @@ def buildtransp(type):
                email.append(mailto.text)
                name1 = name
 
-    df = pd.DataFrame({'Transportadora':transportadora,'Email':email,'Cidade':cidade, 'Estado':estado})
+    df = pd.DataFrame({'Transportadora':transportadora,'Email':email,'Cidade':cidade, 'UF':estado})
     return df
 
-def removeDupli(df):
-    df = df.sort_values(['Estado','Cidade','Transportadora', 'Email'])
-    df = df.drop_duplicates(subset=['Estado','Cidade','Email'], keep='first')
+def removeDuplicates(df):
+    df = df.sort_values(['UF','Cidade','Transportadora', 'Email'])
+    df = df.drop_duplicates(subset=['UF','Cidade','Email'], keep='first')
     return df
 
 #print('##########################################################################################################')
@@ -66,43 +66,43 @@ trecho = 'transportadoras.csv'
 
 # Cities and Estates
 paginas = {
-    'sp': {'cidade': 'piracicaba','estado': 'SP'},
-    'sp': {'cidade': 'rio-claro','estado': 'SP'},
-    'sp': {'cidade': 'araraquara','estado': 'SP'},
-    'sp': {'cidade': 'presidente-prudente','estado': 'SP'},
-    'sp': {'cidade': 'campinas','estado': 'SP'},
-    'sp': {'cidade': 'sorocaba','estado': 'SP'},
-    'sp': {'cidade': 'ribeirao-preto', 'estado': 'SP'},
-    'sp': {'cidade': 'marilia', 'estado': 'SP'},
-    'sp': {'cidade': 'santos', 'estado': 'SP'},
-    'sp': {'cidade': 'ourinhos', 'estado': 'SP'},
-    'sp': {'cidade': 'ubatuba', 'estado': 'SP'},
-    'ac': {'cidade': 'rio-branco', 'estado': 'AC'},
-    'al': {'cidade': 'maceio', 'estado': 'AL'},
-    'ap': {'cidade': 'macapa', 'estado': 'AP'},
-    'am': {'cidade': 'manaus', 'estado': 'AM'},
-    'ba': {'cidade': 'salvador', 'estado': 'BA'},
-    'ce': {'cidade': 'fortaleza', 'estado': 'CE'},
-    'df': {'cidade': 'brasilia', 'estado': 'DF'},
-    'es': {'cidade': 'vitoria', 'estado': 'ES'},
-    'go': {'cidade': 'goiania', 'estado': 'GO'},
-    'ma': {'cidade': 'sao-luis', 'estado': 'MA'},
-    'mt': {'cidade': 'cuiaba', 'estado': 'MT'},
-    'ms': {'cidade': 'campo-grande', 'estado': 'MS'},
-    'mg': {'cidade': 'belo-horizonte', 'estado': 'MG'},
-    'pa': {'cidade': 'belem', 'estado': 'PA'},
-    'pb': {'cidade': 'joao-pessoa', 'estado': 'PB'},
-    'pr': {'cidade': 'curitiba', 'estado': 'PR'},
-    'pe': {'cidade': 'recife', 'estado': 'PE'},
-    'pi': {'cidade': 'teresina', 'estado': 'PI'},
-    'rj': {'cidade': 'rio-de-janeiro', 'estado': 'RJ'},
-    'rn': {'cidade': 'natal', 'estado': 'RN'},
-    'rs': {'cidade': 'porto-alegre', 'estado': 'RS'},
-    'ro': {'cidade': 'porto-velho', 'estado': 'RO'},
-    'rr': {'cidade': 'boa-vista', 'estado': 'RR'},
-    'sc': {'cidade': 'florianopolis', 'estado': 'SC'},
-    'se': {'cidade': 'aracaju', 'estado': 'SE'},
-    'to': {'cidade': 'palmas', 'estado': 'TO'},
+    'sp': {'cidade': 'piracicaba','UF': 'SP'},
+    'sp': {'cidade': 'rio-claro','UF': 'SP'},
+    'sp': {'cidade': 'araraquara','UF': 'SP'},
+    'sp': {'cidade': 'presidente-prudente','UF': 'SP'},
+    'sp': {'cidade': 'campinas','UF': 'SP'},
+    'sp': {'cidade': 'sorocaba','UF': 'SP'},
+    'sp': {'cidade': 'ribeirao-preto', 'UF': 'SP'},
+    'sp': {'cidade': 'marilia', 'UF': 'SP'},
+    'sp': {'cidade': 'santos', 'UF': 'SP'},
+    'sp': {'cidade': 'ourinhos', 'UF': 'SP'},
+    'sp': {'cidade': 'ubatuba', 'UF': 'SP'},
+    'ac': {'cidade': 'rio-branco', 'UF': 'AC'},
+    'al': {'cidade': 'maceio', 'UF': 'AL'},
+    'ap': {'cidade': 'macapa', 'UF': 'AP'},
+    'am': {'cidade': 'manaus', 'UF': 'AM'},
+    'ba': {'cidade': 'salvador', 'UF': 'BA'},
+    'ce': {'cidade': 'fortaleza', 'UF': 'CE'},
+    'df': {'cidade': 'brasilia', 'UF': 'DF'},
+    'es': {'cidade': 'vitoria', 'UF': 'ES'},
+    'go': {'cidade': 'goiania', 'UF': 'GO'},
+    'ma': {'cidade': 'sao-luis', 'UF': 'MA'},
+    'mt': {'cidade': 'cuiaba', 'UF': 'MT'},
+    'ms': {'cidade': 'campo-grande', 'UF': 'MS'},
+    'mg': {'cidade': 'belo-horizonte', 'UF': 'MG'},
+    'pa': {'cidade': 'belem', 'UF': 'PA'},
+    'pb': {'cidade': 'joao-pessoa', 'UF': 'PB'},
+    'pr': {'cidade': 'curitiba', 'UF': 'PR'},
+    'pe': {'cidade': 'recife', 'UF': 'PE'},
+    'pi': {'cidade': 'teresina', 'UF': 'PI'},
+    'rj': {'cidade': 'rio-de-janeiro', 'UF': 'RJ'},
+    'rn': {'cidade': 'natal', 'UF': 'RN'},
+    'rs': {'cidade': 'porto-alegre', 'UF': 'RS'},
+    'ro': {'cidade': 'porto-velho', 'UF': 'RO'},
+    'rr': {'cidade': 'boa-vista', 'UF': 'RR'},
+    'sc': {'cidade': 'florianopolis', 'UF': 'SC'},
+    'se': {'cidade': 'aracaju', 'UF': 'SE'},
+    'to': {'cidade': 'palmas', 'UF': 'TO'},
 }
 
 # website to scraping
@@ -124,6 +124,6 @@ for k in paginas:
         bdTransportadoras = pd.merge(bdTransportadoras, bd, how = 'outer')
     driver.quit()
 
-df = removeDupli(bdTransportadoras) # sort and remove duplicates
-df.columns = ['Transportadora', 'Email','Cidade','Estado'] # insert title in columns
+df = removeDuplicates(bdTransportadoras) # sort and remove duplicates
+df.columns = ['Transportadora', 'Email','Cidade','UF'] # insert title in columns
 df.to_csv(trecho, index=False, encoding='utf-8') # save CSV file
