@@ -14,11 +14,7 @@
     * 2.3- pip install beautifulsoup4
     * 2.4- pip install selenium
 
-
-* 3- Criar Procfile
-    web: gunicorn NOME_ARQUIVO:app
-* 4- pip install gunicorn
-* 5- pip freeze > requirements.txt
+* 3- pip freeze > requirements.txt
 
 #########################################
 ## copy geckodriver.exe and chromedriver.exe to %HOMEPATH%\AppData\Roaming\Python\Python310\Scripts
