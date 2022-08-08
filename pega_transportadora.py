@@ -66,17 +66,17 @@ trecho = 'transportadoras.csv'
 
 # Cities and Estates
 paginas = {
-    'sp': {'cidade': 'piracicaba','UF': 'SP'},
-    'sp': {'cidade': 'rio-claro','UF': 'SP'},
-    'sp': {'cidade': 'araraquara','UF': 'SP'},
-    'sp': {'cidade': 'presidente-prudente','UF': 'SP'},
-    'sp': {'cidade': 'campinas','UF': 'SP'},
-    'sp': {'cidade': 'sorocaba','UF': 'SP'},
-    'sp': {'cidade': 'ribeirao-preto', 'UF': 'SP'},
-    'sp': {'cidade': 'marilia', 'UF': 'SP'},
-    'sp': {'cidade': 'santos', 'UF': 'SP'},
-    'sp': {'cidade': 'ourinhos', 'UF': 'SP'},
-    'sp': {'cidade': 'ubatuba', 'UF': 'SP'},
+    'sp01': {'cidade': 'piracicaba','UF': 'SP'},
+    'sp02': {'cidade': 'rio-claro','UF': 'SP'},
+    'sp03': {'cidade': 'araraquara','UF': 'SP'},
+    'sp04': {'cidade': 'presidente-prudente','UF': 'SP'},
+    'sp05': {'cidade': 'campinas','UF': 'SP'},
+    'sp06': {'cidade': 'sorocaba','UF': 'SP'},
+    'sp07': {'cidade': 'ribeirao-preto', 'UF': 'SP'},
+    'sp08': {'cidade': 'marilia', 'UF': 'SP'},
+    'sp09': {'cidade': 'santos', 'UF': 'SP'},
+    'sp10': {'cidade': 'ourinhos', 'UF': 'SP'},
+    'sp11': {'cidade': 'ubatuba', 'UF': 'SP'},
     'ac': {'cidade': 'rio-branco', 'UF': 'AC'},
     'al': {'cidade': 'maceio', 'UF': 'AL'},
     'ap': {'cidade': 'macapa', 'UF': 'AP'},
@@ -124,6 +124,7 @@ for k in paginas:
         bdTransportadoras = pd.merge(bdTransportadoras, bd, how = 'outer')
     driver.quit()
 
+
+bdTransportadoras.columns = ['Transportadora', 'Email','Cidade','UF'] # insert title in columns
 df = removeDuplicates(bdTransportadoras) # sort and remove duplicates
-df.columns = ['Transportadora', 'Email','Cidade','UF'] # insert title in columns
-df.to_csv(trecho, index=False, encoding='utf-8') # save CSV file
+df.to_csv(trecho, index=False, encoding='utf-8-sig', sep=';') # save CSV file, utf-8 com BOM e separador ;
